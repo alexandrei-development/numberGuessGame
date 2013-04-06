@@ -155,9 +155,6 @@ int generateNumber(){
 
     if(random >= min && random <= max){
         return random;
-    }else {
-        //joke line, if for some reason random number is not right
-        return (MAX_NUMBER / 2) - 1;
     }
 }
 
