@@ -14,6 +14,12 @@ Simple text based number guessing game.
 
 using namespace std;
 
+
+int chooseGame();
+
+void guessTheNumber();
+void pickTheNumber();
+
 int getValue();
 bool askToPlayAgain();
 int generateNumber();
@@ -25,7 +31,47 @@ int MAX_NUMBER = 100; //default is 100, but user can change it
 
 
 int main(){
-    short trys = 0;
+	bool quitGame = false;
+    
+	do{
+		switch(chooseGame()){
+		case 1:
+			guessTheNumber();
+			break;
+		case 2:
+			cout << "Game under development.\n";
+			break;
+		case 3:
+			quitGame = true;
+			break;
+		default:
+			cout << "This should not show up, code fails.\n";
+			break;
+		}
+	}while(!quitGame);
+
+    return 0;
+}
+
+//===================================================================
+//Function to choose game;
+//===================================================================
+int chooseGame(){
+	int input;
+	
+	cout << "\n\nWhat Game do you want to play?\n\n";
+	cout << "1) Guess the number\n";
+	cout << "2) Pick the number\n";
+	cout << "3) Quit\n";
+}
+
+
+//===================================================================
+//Functions for the first game.
+//===================================================================
+
+void guessTheNumber(){
+	short trys = 0;
     int randomNumber = 0;
     int userInput = 0;
 
@@ -65,9 +111,8 @@ int main(){
 
         playAgain = askToPlayAgain();
     }while(playAgain);
-
-    return 0;
 }
+
 
 int getBiggestNumber(){
     bool goodInput = false;
@@ -170,3 +215,16 @@ void congratulate(int trys, int randomNumber){
         cout << "It took you " << trys << " trys to find " << randomNumber << "!\n";
 	}
 }
+
+//===================================================================
+//Functions for the second game.
+//===================================================================
+
+void pickTheNumber(){
+	
+}
+
+
+
+
+
