@@ -34,12 +34,13 @@ int main(){
 	bool quitGame = false;
     
 	do{
-		switch(chooseGame()){
+		int choice = chooseGame();
+		switch(choice){
 		case 1:
 			guessTheNumber();
 			break;
 		case 2:
-			cout << "Game under development.\n";
+			cout << "\nGame under development.\n";
 			break;
 		case 3:
 			quitGame = true;
@@ -58,11 +59,37 @@ int main(){
 //===================================================================
 int chooseGame(){
 	int input;
+
+	bool goodInput = false;
 	
-	cout << "\n\nWhat Game do you want to play?\n\n";
-	cout << "1) Guess the number\n";
-	cout << "2) Pick the number\n";
-	cout << "3) Quit\n";
+	do
+	{
+		cout << "\n\nWhat Game do you want to play?\n\n";
+		cout << "1) Guess the number\n";
+		cout << "2) Pick the number\n";
+		cout << "3) Quit\n";
+		cout << ">>>";
+		cin.clear();
+		cin >> input;
+		if(input >= 1 && input <= 3 && !cin.fail())
+		{
+			goodInput = true;
+			return input;
+		} 
+		if(!(input >= 1 && input <= 3) && !cin.fail())
+		{
+			goodInput = false;
+			cout << "\nError, invalid choice " << input;
+		}
+		if(cin.fail())
+		{
+			goodInput = false;
+			char input2;
+			cin.clear();
+			cin >> input2;
+			cout << "\nError, invalid choice " << input2;
+		}
+	}while(!goodInput);
 }
 
 
@@ -221,7 +248,11 @@ void congratulate(int trys, int randomNumber){
 //===================================================================
 
 void pickTheNumber(){
-	
+	bool playAgain;
+	do
+	{
+		
+	}while(playAgain);
 }
 
 
