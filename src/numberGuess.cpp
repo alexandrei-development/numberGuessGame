@@ -4,6 +4,8 @@ Created by Alex Vasilenko
 No Rights Reserved
 
 Simple text based number guessing game.
+
+>>> Keep Tab Width at 4 <<<
 */
 
 #include <iostream>
@@ -20,13 +22,14 @@ int chooseGame();
 void guessTheNumber();
 void pickTheNumber();
 
-int getValue();
 bool askToPlayAgain();
-int generateNumber();
+
+int getValue();
+int generateNumber(int, int);
 int getBiggestNumber();
 void congratulate(int, int);
 
-const int MIN_NUMBER = 10;
+const int SMALLEST_NUMBER = 10;
 int MAX_NUMBER = 100; //default is 100, but user can change it
 
 
@@ -54,9 +57,9 @@ int main(){
     return 0;
 }
 
-//===================================================================
+//==============================================================================
 //Function to choose game;
-//===================================================================
+//==============================================================================
 int chooseGame(){
 	int input;
 
@@ -92,10 +95,31 @@ int chooseGame(){
 	}while(!goodInput);
 }
 
+//==============================================================================
+//Functions for both games.
+//==============================================================================
 
-//===================================================================
+bool askToPlayAgain(){
+    char input;
+    bool goodInput = false;
+    while(!goodInput){
+        cout << "Do you want to play again? (Y / N)\n>>>";
+        cin >> input;
+        if(input == 'y' || input == 'Y'){
+            goodInput = true;
+            return true;
+        }else if(input == 'n' || input == 'N'){
+            goodInput = true;
+            return false;
+        }else{
+            cout << "Error, not ( Y ) or ( N )\n";
+        }
+    }
+}
+
+//==============================================================================
 //Functions for the first game.
-//===================================================================
+//==============================================================================
 
 void guessTheNumber(){
 	short trys = 0;
@@ -111,7 +135,7 @@ void guessTheNumber(){
 
     do{
         MAX_NUMBER = getBiggestNumber();
-        randomNumber = generateNumber();
+        randomNumber = generateNumber(1, MAX_NUMBER); //keep min number 1
         bool gotRight = false;
         while(!gotRight){
             userInput = getValue();
@@ -150,10 +174,10 @@ int getBiggestNumber(){
     while(!goodInput){
         cout << "What should the biggest number be? ('D' for 100)\n>>>";
         cin >> setw(8) >> max;
-        if(max >= MIN_NUMBER){
+        if(max >= SMALLEST_NUMBER){
             goodInput = true;
-        }else if(max < MIN_NUMBER && !cin.fail()){
-            cout << "Error: number must be greater than or equal to " << MIN_NUMBER << ".\n";
+        }else if(max < SMALLEST_NUMBER && !cin.fail()){
+            cout << "Error: number must be greater than or equal to " << SMALLEST_NUMBER << ".\n";
         }else if(max > 1000000){
             cout << "Error: number must be less than or equal to 1,000,000.\n";
         }
@@ -198,29 +222,9 @@ int getValue(){
     return input;
 }
 
-bool askToPlayAgain(){
-    char input;
-    bool goodInput = false;
-    while(!goodInput){
-        cout << "Do you want to play again? (Y / N)\n>>>";
-        cin >> input;
-        if(input == 'y' || input == 'Y'){
-            goodInput = true;
-            return true;
-        }else if(input == 'n' || input == 'N'){
-            goodInput = true;
-            return false;
-        }else{
-            cout << "Error, not ( Y ) or ( N )\n";
-        }
-    }
-}
-
 /*Returns a randomly generated number.
 Can be edited to support arguments.*/
-int generateNumber(){
-    int min = 1;
-    int max = MAX_NUMBER;
+int generateNumber(int min, int max){
     int random = -1;
 
     random = rand() % (max - min) + min;
@@ -243,9 +247,9 @@ void congratulate(int trys, int randomNumber){
 	}
 }
 
-//===================================================================
+//==============================================================================
 //Functions for the second game.
-//===================================================================
+//==============================================================================
 
 void pickTheNumber(){
 	bool playAgain;
