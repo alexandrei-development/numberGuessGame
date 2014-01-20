@@ -33,17 +33,20 @@ const int SMALLEST_NUMBER = 10;
 int MAX_NUMBER = 100; //default is 100, but user can change it
 
 
-int main(){
+int main()
+{
 	bool quitGame = false;
     
-	do{
+	do
+	{
 		int choice = chooseGame();
-		switch(choice){
+		switch(choice)
+		{
 		case 1:
 			guessTheNumber();
 			break;
 		case 2:
-			cout << "\nGame under development.\n";
+			pickTheNumber();
 			break;
 		case 3:
 			quitGame = true;
@@ -52,7 +55,7 @@ int main(){
 			cout << "This should not show up, code fails.\n";
 			break;
 		}
-	}while(!quitGame);
+	} while(!quitGame);
 
     return 0;
 }
@@ -71,7 +74,7 @@ int chooseGame(){
 		cout << "1) Guess the number\n";
 		cout << "2) Pick the number\n";
 		cout << "3) Quit\n";
-		cout << ">>>";
+		cout << ">>> ";
 		cin.clear();
 		cin >> input;
 		if(input >= 1 && input <= 3 && !cin.fail())
@@ -99,21 +102,24 @@ int chooseGame(){
 //Functions for both games.
 //==============================================================================
 
-bool askToPlayAgain(){
+bool askToPlayAgain()
+{
     char input;
     bool goodInput = false;
-    while(!goodInput){
-        cout << "Do you want to play again? (Y / N)\n>>>";
+    while(!goodInput)
+    {
+        cout << "Do you want to play again? (Y / N)\n>>> ";
         cin >> input;
-        if(input == 'y' || input == 'Y'){
+        if(input == 'y' || input == 'Y')
+        {
             goodInput = true;
             return true;
-        }else if(input == 'n' || input == 'N'){
+        }else if(input == 'n' || input == 'N')
+        {
             goodInput = true;
             return false;
-        }else{
+        }else
             cout << "Error, not ( Y ) or ( N )\n";
-        }
     }
 }
 
@@ -121,7 +127,8 @@ bool askToPlayAgain(){
 //Functions for the first game.
 //==============================================================================
 
-void guessTheNumber(){
+void guessTheNumber()
+{
 	short trys = 0;
     int randomNumber = 0;
     int userInput = 0;
@@ -133,19 +140,23 @@ void guessTheNumber(){
 
     cout << "Number guessing game!\n";
 
-    do{
+    do
+    {
         MAX_NUMBER = getBiggestNumber();
         randomNumber = generateNumber(1, MAX_NUMBER); //keep min number 1
         bool gotRight = false;
         while(!gotRight){
             userInput = getValue();
-            if(userInput == randomNumber){
+            if(userInput == randomNumber)
+            {
                 trys++;
                 gotRight = true;
-            }else if(userInput > randomNumber){
+            }else if(userInput > randomNumber)
+            {
                 trys++;
                 cout << "Too high!\n";
-            }else if(userInput < randomNumber && userInput > 0){
+            }else if(userInput < randomNumber && userInput > 0)
+            {
                 trys++;
                 cout << "Too low!\n";
             }
@@ -161,33 +172,42 @@ void guessTheNumber(){
         trys = 0;
 
         playAgain = askToPlayAgain();
-    }while(playAgain);
+    } while(playAgain);
 }
 
 
-int getBiggestNumber(){
+int getBiggestNumber()
+{
     bool goodInput = false;
 
     int max = 0;
     char input2;
 
-    while(!goodInput){
-        cout << "What should the biggest number be? ('D' for 100)\n>>>";
+    while(!goodInput)
+    {
+        cout << "What should the biggest number be? ('D' for 100)\n>>> ";
         cin >> setw(8) >> max;
-        if(max >= SMALLEST_NUMBER){
+        if(max >= SMALLEST_NUMBER)
+        {
             goodInput = true;
-        }else if(max < SMALLEST_NUMBER && !cin.fail()){
+        }
+        else if(max < SMALLEST_NUMBER && !cin.fail())
+        {
             cout << "Error: number must be greater than or equal to " << SMALLEST_NUMBER << ".\n";
-        }else if(max > 1000000){
+        }else if(max > 1000000)
+        {
             cout << "Error: number must be less than or equal to 1,000,000.\n";
         }
-        if(cin.fail()){
+        if(cin.fail())
+        {
             cin.clear();
             cin >> input2;
-            if(input2 == 'd' || input2 == 'D'){
+            if(input2 == 'd' || input2 == 'D')
+            {
                 max = 100;
                 goodInput = true;
-            }else{
+            }else
+            {
                 cout << "Error: ( " << input2 << " ) is not a number or 'D'.\n";
             }
         }
@@ -195,25 +215,28 @@ int getBiggestNumber(){
     return max;
 }
 
-int getValue(){
+int getValue()
+{
     bool goodInput = false;
 
     int input = 0;
     char input2;
 
     while(!goodInput){
-        cout << "Enter a number 1 - " << MAX_NUMBER << " (Q to give up)\n>>>";
+        cout << "Enter a number 1 - " << MAX_NUMBER << " (Q to give up)\n>>> ";
         cin >> setw(8) >> input;
-        if(input >= 1 && input <= MAX_NUMBER && !cin.fail()){
+        if(input >= 1 && input <= MAX_NUMBER && !cin.fail())
             goodInput = true;
-        }
-        if((input < 1 || input > MAX_NUMBER) && !cin.fail()){
+        if((input < 1 || input > MAX_NUMBER) && !cin.fail())
+        {
             cout << "Error: value must be 1 - " << MAX_NUMBER << ".\n";
         }
-        if(cin.fail()){
+        if(cin.fail())
+        {
             cin.clear();
             cin >> input2;
-            if(input2 == 'q' || input2 == 'Q'){
+            if(input2 == 'q' || input2 == 'Q')
+            {
                 return -1;
             }
             cout << "Error: ( " << input2 << " ) is not a number.\n";
@@ -224,24 +247,30 @@ int getValue(){
 
 /*Returns a randomly generated number.
 Can be edited to support arguments.*/
-int generateNumber(int min, int max){
+int generateNumber(int min, int max)
+{
     int random = -1;
 
     random = rand() % (max - min) + min;
 
-    if(random >= min && random <= max){
+    if(random >= min && random <= max)
         return random;
-    }
 }
 
-void congratulate(int trys, int randomNumber){
-    if(trys == 1){
+void congratulate(int trys, int randomNumber)
+{
+    if(trys == 1)
+    {
         cout << "Perfect!\n";
         cout << "You guessed " << randomNumber << " on the first try!\n";
-    }else if(trys > 1 && trys <= 15){
+    }
+    else if(trys > 1 && trys <= 15)
+    {
         cout << "Good Job!\n";
         cout << "It took you " << trys << " trys to find " << randomNumber << "!\n";
-    }else{
+    }
+    else
+    {
 		cout << "That took a while.\n";
         cout << "It took you " << trys << " trys to find " << randomNumber << "!\n";
 	}
@@ -250,16 +279,83 @@ void congratulate(int trys, int randomNumber){
 //==============================================================================
 //Functions for the second game.
 //==============================================================================
+int askForAnswer();
 
 void pickTheNumber(){
-	bool playAgain;
+	bool playAgain = false;
+	bool quit = false;
 	do
 	{
-		
-	}while(playAgain);
+		int lowestNumber = 0;
+		int highestNumber = 100;
+		int lastGuess = highestNumber / 2;
+		int userInput = 101;
+		while( userInput <= 0 || userInput >= 100 )
+		{
+		    cout << "Pick a number 1 - 100\n>>> ";
+		    cin >> userInput;
+		}
+		while( !quit )
+		{
+		    if( lowestNumber >= highestNumber )
+		    {
+		        cout << "What trickery is this? I refuse to play!" << endl;
+		        return;
+		    }
+		    if( highestNumber - lowestNumber == 2 )
+		    {
+		        lastGuess = highestNumber - 1;
+		        cout << "The number you picked is: " << lastGuess << endl;
+		        quit = true;
+		    }
+		    else
+		    {
+		        lastGuess = ( highestNumber + lowestNumber ) / 2;
+		        cout << "I guess: " << lastGuess << endl;
+		        int result = askForAnswer();
+		        if( result == 1)
+		            lowestNumber = lastGuess;
+		        else if( result == 2 )
+		            highestNumber = lastGuess;
+		        else
+		        {
+		            cout << "Damn I am good." << endl;
+		            quit = true;
+		        }
+		    }
+		}
+		playAgain = askToPlayAgain();
+		quit = false;
+	} while( playAgain );
 }
 
-
+int askForAnswer()
+{
+    char input;
+    bool goodInput = false;
+    while(!goodInput)
+    {
+        cout << "Am I too (L)ow, too (H)igh, or did I (G)uess the number?\n>>> ";
+        cin >> input;
+        if(input == 'l' || input == 'L')
+        {
+            goodInput = true;
+            return 1;
+        }
+        else if(input == 'h' || input == 'H')
+        {
+            goodInput = true;
+            return 2;
+        }
+        else if(input == 'g' || input == 'G')
+        {
+            goodInput = true;
+            return 3;
+        }
+        else
+            cout << "Error, not L, H, or G\n";
+    }
+}
 
 
 
