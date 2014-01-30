@@ -52,7 +52,6 @@ int main()
 			quitGame = true;
 			break;
 		default:
-			cout << "This should not show up, code fails.\n";
 			break;
 		}
 	} while(!quitGame);
@@ -63,7 +62,8 @@ int main()
 //==============================================================================
 //Function to choose game;
 //==============================================================================
-int chooseGame(){
+int chooseGame()
+{
 	int input;
 
 	bool goodInput = false;
@@ -145,7 +145,8 @@ void guessTheNumber()
         MAX_NUMBER = getBiggestNumber();
         randomNumber = generateNumber(1, MAX_NUMBER); //keep min number 1
         bool gotRight = false;
-        while(!gotRight){
+        while(!gotRight)
+        {
             userInput = getValue();
             if(userInput == randomNumber)
             {
@@ -165,9 +166,8 @@ void guessTheNumber()
                 gotRight = true;
             }
         }
-        if(!quit){
+        if(!quit)
             congratulate(trys, randomNumber);
-        }
 
         trys = 0;
 
@@ -194,7 +194,8 @@ int getBiggestNumber()
         else if(max < SMALLEST_NUMBER && !cin.fail())
         {
             cout << "Error: number must be greater than or equal to " << SMALLEST_NUMBER << ".\n";
-        }else if(max > 1000000)
+        }
+        else if(max > 1000000)
         {
             cout << "Error: number must be less than or equal to 1,000,000.\n";
         }
@@ -222,7 +223,8 @@ int getValue()
     int input = 0;
     char input2;
 
-    while(!goodInput){
+    while(!goodInput)
+    {
         cout << "Enter a number 1 - " << MAX_NUMBER << " (Q to give up)\n>>> ";
         cin >> setw(8) >> input;
         if(input >= 1 && input <= MAX_NUMBER && !cin.fail())
@@ -284,16 +286,26 @@ int askForAnswer();
 void pickTheNumber(){
 	bool playAgain = false;
 	bool quit = false;
+	int numberOfGuesses = 0;
 	do
 	{
 		int lowestNumber = 0;
 		int highestNumber = 100;
 		int lastGuess = highestNumber / 2;
 		int userInput = 101;
+		numberOfGuesses = 0;
 		while( userInput <= 0 || userInput >= 100 )
 		{
 		    cout << "Pick a number 1 - 100\n>>> ";
 		    cin >> userInput;
+		    if(cin.fail())
+			{
+				char input2;
+				cin.clear();
+				cin >> input2;
+				if( input2 == 'q' || input2 == 'Q' )
+					return;
+			}
 		}
 		while( !quit )
 		{
@@ -314,12 +326,18 @@ void pickTheNumber(){
 		        cout << "I guess: " << lastGuess << endl;
 		        int result = askForAnswer();
 		        if( result == 1)
+		        {
 		            lowestNumber = lastGuess;
+		            numberOfGuesses++;
+		        }
 		        else if( result == 2 )
+		        {
 		            highestNumber = lastGuess;
+		            numberOfGuesses++;
+		        }
 		        else
 		        {
-		            cout << "Damn I am good." << endl;
+		            cout << "Took me " << numberOfGuesses << " tries." << endl;
 		            quit = true;
 		        }
 		    }
